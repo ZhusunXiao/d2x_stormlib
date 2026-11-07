@@ -45,8 +45,9 @@ extern "C" {
 #endif
 
 
-/* detect 64-bit mode if possible */
-#if defined(__x86_64__) 
+/* This legacy 60-bit digit implementation requires LP64. Win64 is LLP64,
+ * where unsigned long remains 32-bit even when pointers are 64-bit. */
+#if defined(__x86_64__) && (ULONG_MAX > 0xFFFFFFFFUL)
    #if !(defined(MP_64BIT) && defined(MP_16BIT) && defined(MP_8BIT))
       #define MP_64BIT
    #endif
